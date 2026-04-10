@@ -17,10 +17,20 @@ ax1.plot(women_df["date"], women_df["LES1252882800Q"], color="red")
 ax1.plot(men_df["date"], difference_df, color="green")
 
 ax2 = ax1.twinx()
-ax2.plot(men_df["date"], percent_df, color="blue")
+ax2.plot(men_df["date"], percent_df, color="purple")
 plt.gcf().autofmt_xdate()  # angled labels so they don’t overlap
-plt.title("Real Median Wages for Men and Women, seasonally adjusted")
-plt.legend(["Men", "Women", "Difference", "Percent"])
-plt.xlabel("Year")
-plt.ylabel("Real Median Wages (Seasonally Adjusted)")
+plt.title("Real Median Wages for Men and Women, quarterly, seasonally adjusted")
+
+# Set axis labels
+ax1.set_xlabel("Year")
+ax1.set_ylabel("Real Median Wages (Seasonally Adjusted)")
+ax2.set_ylabel("Percent Difference")
+
+
+# Actually use handle/labels from the real plots
+lines_labels = [ax1.lines[0], ax1.lines[1], ax1.lines[2], ax2.lines[0]]
+labels = ["Men", "Women", "Nominal Difference", "Percent Difference"]
+
+ax1.legend(lines_labels, labels, loc="upper left")
+
 plt.show()
