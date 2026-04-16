@@ -1,11 +1,11 @@
-setwd("/home/ajchi/personal-projects/r-and-stuff")
 library(data.table)
 library(survey)
+library(here)
 
 cols_needed <- c("AGEP", "SCHL", "FOD1P", "ESR", "PWGTP", "WAGP")
 
-pums_a <- fread("psam_pusa.csv", select = cols_needed)
-pums_b <- fread("psam_pusb.csv", select = cols_needed)
+pums_a <- fread(here("data", "psam_pusa.csv"), select = cols_needed)
+pums_b <- fread(here("data", "psam_pusa.csv"), select = cols_needed)
 pums <- rbind(pums_a, pums_b)
 
 #FOD1P: 2102 = CS, 2407 = CE
