@@ -44,11 +44,12 @@ def main():
 
 def get_fred_data(fred_code):
     url = f"https://api.stlouisfed.org/fred/series/observations?series_id={fred_code}&api_key={FRED_API_KEY}&file_type=json"
-    response = requests.get(url)
-    observations = response.json()["observations"]
-    dates = [obs["date"] for obs in observations]
-    values = [float(obs["value"] )for obs in observations]
-    return pd.DataFrame({"observation_date": dates, "value": values})
+    df = pd.DataFrame(requests.get(url).json()["observations"])
+    return (
+        df.loc[df["value"] != ".", ["date", "value"]]
+        .rename(columns={"date": "observation_date"})
+        .assign(value=lambda d: pd.to_numeric(d["value"]))
+    )
 
 if __name__ == "__main__":
     main()
